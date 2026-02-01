@@ -1,9 +1,5 @@
 export const React = {
     createElement: (tag, props, ...children) => {
-        if (typeof tag == "function")
-        {
-            return tag(props);
-        }
         return { tag, props : { ...props, children}};
     },
 }
@@ -14,6 +10,13 @@ export const render = (reactElement, container) => {
         container.appendChild(document.createTextNode(reactElement));
         return;
     }
+
+    if (typeof reactElement.tag === "function") {
+        const childElement = reactElement.tag(reactElement.props);
+        render(childElement, container);
+        return;
+    }
+
     const domElement = document.createElement(reactElement.tag);
     Object.keys(reactElement.props || [])
         .filter(p => p != 'children')
@@ -24,28 +27,44 @@ export const render = (reactElement, container) => {
     container.appendChild(domElement);
 }
 
+let rootContainer;
+let rootElement;
+
 export const createRoot = (container) => {
+  rootContainer = container;
   return {
     render: function (reactElement) {
-      render(reactElement, container);
+      rootElement = reactElement;
+      reRenderFromRoot();
     },
   };
 };
 
-const rerender = () => {
-    
+let states = [];
+let stateCursor = 0;
+
+const reRenderFromRoot = () =>
+{   
+    stateCursor = 0;
+    if (rootContainer.firstChild)
+    {
+        rootContainer.firstChild.remove();
+    }
+    render(rootElement, rootContainer);
 }
 
 export const useState = (initialState) => {
-    let state = initialState;
+    const FROZENCURSOR = stateCursor;
+    states[FROZENCURSOR] = states[FROZENCURSOR] || initialState;
+
     let setState = (newState) => {
-        if (typeof newState === "function") {          
-            console.log(state + " " + newState(state));  
-            state = newState(state);
+        if (typeof newState === "function") {
+            states[FROZENCURSOR] = newState(states[FROZENCURSOR]);
         } else {
-            state = newState;
+            states[FROZENCURSOR] = newState;
         }
-        rerender(); 
+        stateCursor++;
+        reRenderFromRoot();
     };
-    return [state,setState];
+    return [states[FROZENCURSOR],setState];
 }
