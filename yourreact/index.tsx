@@ -1,11 +1,7 @@
-import { React } from "./customreactlib/react";
-import { createRoot } from "./customreactlib/react-dom";
-
-const count = 0;
-const setCount = (c) => { c(count);}
+import { React, useState, createRoot } from "./customreactlib/react";
 
 const App = () => {
-  //const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0)
 
   return (
     <div>
