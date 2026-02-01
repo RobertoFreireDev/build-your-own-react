@@ -14,7 +14,7 @@ add script and run **npm run ts:init** to create your tsconfig file. tsconfig.js
 
 ## Create our first react object:
 
-JSX is a syntax extension that must be transformed into standard JavaScript code before the browser can execute it. And because tsconfig.json has something "jsx": "react", React.createElement function is expected.
+JSX is a syntax extension that must be transformed into standard JavaScript code before the browser can execute it. And because tsconfig.json is configured with "jsx": "react", the TypeScript compiler transforms each JSX element into a call to `React.createElement`. So, we are creating our own `React.createElement`.
 
 ```tsx
 let React = {
@@ -27,6 +27,23 @@ const a = <div>hello</div>;
 ```
 
 ![log create element](imgs/logcreateelement.png)
+
+```tsx
+let React = {
+    createElement: (...args) => {
+        console.log(args);
+    },
+}
+
+const a = <div className="customClass">
+    <h1>Hello, person!</h1>
+    <p>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae nemo tempore sint nihil, cumque incidunt. Aspernatur eaque molestiae praesentium dolorem officiis officia expedita mollitia voluptas aliquid inventore, quam sed quas.
+    </p>
+</div>;
+```
+
+![create element called 3 times](imgs/createelementcalled3times.png)
 
 ## React concepts
 
