@@ -4,11 +4,24 @@ let React = {
         {
             return tag(props);
         }
-        var element = { tag, props : { ...props, children}}
-        console.log(element);
-        return element;
+        return { tag, props : { ...props, children}};
     },
 }
+
+function render(reactElement, container)
+{
+    container.innerHTML = "";
+    console.log(reactElement);
+    console.log(container);
+}
+
+let createRoot = (container) => {
+  return {
+    render: function (reactElement) {
+      render(reactElement, container);
+    },
+  };
+};
 
 const App = () => <div className="customClass">
     <h1>Hello, person!</h1>
@@ -17,4 +30,5 @@ const App = () => <div className="customClass">
     </p>
 </div>;
 
-<App/>;
+const root = createRoot(document.getElementById("root"))
+root.render(<App/>);
