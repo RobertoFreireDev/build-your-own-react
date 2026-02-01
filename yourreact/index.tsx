@@ -1,37 +1,4 @@
-let React = {
-    createElement: (tag, props, ...children) => {
-        if (typeof tag == "function")
-        {
-            return tag(props);
-        }
-        return { tag, props : { ...props, children}};
-    },
-}
-
-function render(reactElement, container){
-    console.log(reactElement);
-    if (['string','number'].includes(typeof reactElement))
-    {
-        container.appendChild(document.createTextNode(reactElement));
-        return;
-    }
-    const domElement = document.createElement(reactElement.tag);
-    Object.keys(reactElement.props || [])
-        .filter(p => p != 'children')
-        .forEach(p => domElement[p] = reactElement.props[p]);
-    (reactElement.props?.children || []).forEach(child => {
-        render(child, domElement);
-    });
-    container.appendChild(domElement);
-}
-
-let createRoot = (container) => {
-  return {
-    render: function (reactElement) {
-      render(reactElement, container);
-    },
-  };
-};
+import { React, createRoot } from "./customreactlib/react";
 
 const App = () => <div className="customClass">
     <h1>Hello, person!</h1>
