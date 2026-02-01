@@ -26,7 +26,7 @@ let React = {
 const a = <div>hello</div>;
 ```
 
-![log create element](logcreateelement.png)
+![log create element](imgs/logcreateelement.png)
 
 ## React concepts
 

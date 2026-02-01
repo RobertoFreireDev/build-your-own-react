@@ -4,4 +4,4 @@ let React = {
     },
 }
 
-const a = <div>hello</div>;
+const a = <div className="customClass">hello</div>;
