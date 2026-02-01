@@ -66,6 +66,73 @@ const a = <div className="customClass">
 
 ![creating Virtual DOM](imgs/creatingvirtualdom.png)
 
+## What source files are built on the browser: 
+
+```html
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <title>Your own React</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/yourreact.2ef0291c.js"></script>  
+</body></html>
+```
+
+
+```js
+...
+},{}],"lzhIH":[function(require,module,exports,__globalThis) {
+let React = {
+    createElement: (tag, props, ...children)=>{
+        if (typeof tag == "function") return tag(props);
+        var element = {
+            tag,
+            props: {
+                ...props,
+                children
+            }
+        };
+        console.log(element);
+        return element;
+    }
+};
+const App = ()=>/*#__PURE__*/ React.createElement("div", {
+        className: "customClass",
+        __source: {
+            fileName: "index.tsx",
+            lineNumber: 13,
+            columnNumber: 19
+        },
+        __self: this
+    }, /*#__PURE__*/ React.createElement("h1", {
+        __source: {
+            fileName: "index.tsx",
+            lineNumber: 14,
+            columnNumber: 5
+        },
+        __self: this
+    }, "Hello, person!"), /*#__PURE__*/ React.createElement("p", {
+        __source: {
+            fileName: "index.tsx",
+            lineNumber: 15,
+            columnNumber: 5
+        },
+        __self: this
+    }, "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae nemo tempore sint nihil, cumque incidunt. Aspernatur eaque molestiae praesentium dolorem officiis officia expedita mollitia voluptas aliquid inventore, quam sed quas."));
+/*#__PURE__*/ React.createElement(App, {
+    __source: {
+        fileName: "index.tsx",
+        lineNumber: 20,
+        columnNumber: 1
+    },
+    __self: this
+});
+
+},{}]},["lKml7","lzhIH"], "lzhIH", "parcelRequire94c2", {})
+//# sourceMappingURL=yourreact.2ef0291c.js.map
+```
+
 ## useState hook:
 
 # References:
